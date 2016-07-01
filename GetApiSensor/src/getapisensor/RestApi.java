@@ -77,4 +77,40 @@ public class RestApi {
         }
         return lSensor;
     }
+    
+     /**
+     * @param idSensor numero del sensor
+     * @param tipoOrdenamiento 1 si se desea ordenar del dato mas reciente al mas antiguo, 0 en otro caso
+    */
+    public static Boolean insertarPrediccion(String contaminante, String imecas, String calidad, String hora){
+        
+        Boolean bool = false;
+    
+         try {
+            // TODO code application logic here
+            
+            OkHttpClient client = new OkHttpClient();
+            
+            MediaType mediaType = MediaType.parse("application/octet-stream");
+            Request request = new Request.Builder()
+                    .url("http://airmx.net/webservice/insertar_prediccion.php?contaminante="+contaminante+"&imecas="+imecas+"&calidad="+calidad+"&hora="+hora)
+                    .get()
+                    .addHeader("cache-control", "no-cache")
+                    .addHeader("postman-token", "b983b2f6-8cd7-5956-32f5-bc7cf4e53b9f")
+                    .build();
+            
+            Response response = client.newCall(request).execute();
+            
+            
+            String string = response.body().string();
+            JSONObject jsonObject = new JSONObject(string); 
+          
+            bool = jsonObject.getBoolean("retorno");
+                
+            
+        } catch (IOException | JSONException ex) {
+            Logger.getLogger(GetApiSensor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bool;
+    }
 }
