@@ -54,7 +54,7 @@ public class GetApiSensor {
         
         // insertar valor predicho
         
-        if(RestApi.insertarPrediccion("O3", "324.2", "MALA", "30/JUNIO/2016")){
+        if(RestApi.insertarPrediccion("O3", "324.2", "MALA", "30/JUNIO/2016", "1")){
             System.out.println("Insertado");
         }
         else{
